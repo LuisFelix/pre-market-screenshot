@@ -24,8 +24,8 @@ jobs:
 
       - name: Log in and take screenshot
         env:
-          SITE_USER: ${{ secrets.SITE_USER }}
-          SITE_PASS: ${{ secrets.SITE_PASS }}
+          TV_SESSIONID: ${{ secrets.TV_SESSIONID }}
+          TV_SESSIONID_SIGN: ${{ secrets.TV_SESSIONID_SIGN }}
         run: node screenshot.js
 
       - name: Store for 7 days
