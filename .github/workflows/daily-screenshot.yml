@@ -4,7 +4,7 @@ name: Daily screenshot
 on:
   schedule:
     # Weekdays at 14:00 UTC = 9:00 AM Eastern (EST) / 10:00 AM (EDT). Cron is always UTC.
-    - cron: "0 14 * * 1-5"
+    - cron: "0 15 * * 1-5" 
   workflow_dispatch: # lets you run it manually from the Actions tab
 
 jobs:
