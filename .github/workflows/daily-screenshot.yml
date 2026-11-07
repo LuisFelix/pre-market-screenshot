@@ -24,6 +24,7 @@ jobs:
 
       - name: Log in and take screenshot
         env:
+          TV_COOKIES: ${{ secrets.TV_COOKIES }}
           TV_SESSIONID: ${{ secrets.TV_SESSIONID }}
           TV_SESSIONID_SIGN: ${{ secrets.TV_SESSIONID_SIGN }}
         run: node screenshot.js
