@@ -1,0 +1,37 @@
+# Save as .github/workflows/daily-screenshot.yml (use a PRIVATE repo)
+name: Daily screenshot
+
+on:
+  schedule:
+    # Weekdays at 14:00 UTC = 9:00 AM Eastern (EST) / 10:00 AM (EDT). Cron is always UTC.
+    - cron: "0 14 * * 1-5"
+  workflow_dispatch: # lets you run it manually from the Actions tab
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright + Chromium
+        run: |
+          npm install playwright@1.47.2
+          npx playwright install --with-deps chromium
+
+      - name: Log in and take screenshot
+        env:
+          SITE_USER: ${{ secrets.SITE_USER }}
+          SITE_PASS: ${{ secrets.SITE_PASS }}
+        run: node screenshot.js
+
+      - name: Store for 7 days
+        if: always()   # also keeps the FAILED_ image if login breaks
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot_${{ github.run_number }}
+          path: "*.png"
+          retention-days: 7   # GitHub deletes it automatically after 7 days
